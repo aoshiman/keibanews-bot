@@ -7,7 +7,7 @@ import feedparser
 from twython import Twython, TwythonError
 from docopt import docopt
 import conf
-from setting import FILE, URL, TEXT
+from setting import FILE, URL
 
 
 __usage__="""
@@ -56,12 +56,12 @@ def tweet_news():
     feed = parse_feed(URL)
     latest = file_open(FILE)
 
-    with open(TEXT, 'w+') as fp:
+    with open(FILE, 'w+') as fp:
         for entry in feed:
             _date, title, url = entry[0], entry[1], entry[2]
             entry_date = strftime('%Y/%m/%d %H:%M',localtime(mktime(email.utils.\
                                                         parsedate(_date))+32400))
-            if not latest or entry_date > latest:
+            if entry_date > latest:
                 post = u'{0} {1} {2}'.format(entry_date, title, url)
                 if args['--no-tweet']:
                     print(post)
