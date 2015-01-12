@@ -61,7 +61,7 @@ def tweet_news():
             _date, title, url = entry[0], entry[1], entry[2]
             entry_date = strftime('%Y/%m/%d %H:%M',localtime(mktime(email.utils.\
                                                         parsedate(_date))+32400))
-            if entry_date > latest:
+            if not latest or entry_date > latest:
                 post = u'{0} {1} {2}'.format(entry_date, title, url)
                 if args['--no-tweet']:
                     print(post)
